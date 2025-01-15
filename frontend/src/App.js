@@ -11,24 +11,31 @@ import EventPage from "./pages/EventsPage";
 import EditEventPage from "./pages/EditEventPage";
 import EventDetailPage from "./pages/EventDetailPage";
 import NewEventPage from "./pages/NewEventPage";
-// import NewEventPage from "./pages/ErrorPage";
+import EventsPage, { loader as eventsLoader } from "./pages/EventsPage";
+import ErrorPage from "./pages/ErrorPage";
 
 function App() {
   const router = createBrowserRouter([
     {
       path: "/",
       element: <RootLoyout />,
-      // errorElement: <ErrorPage />,
+      errorElement: <ErrorPage />,
       children: [
         { index: true, element: <HomePage /> },
-        { path : "events", 
-          element: <EventsRoot />, 
+        {
+          path: "events",
+          element: <EventsRoot />,
           children: [
-          { index: true, element: <EventPage /> },
-          {path: "new", element: <NewEventPage /> },
-          { path: ":id", element: <EventDetailPage /> },
-          { path: ":id/edit", element: <EditEventPage /> },
-        ]},
+            {
+              index: true,
+              element: <EventPage />,
+              loader: eventsLoader,
+            },
+            { path: "new", element: <NewEventPage /> },
+            { path: ":id", element: <EventDetailPage /> },
+            { path: ":id/edit", element: <EditEventPage /> },
+          ]
+        },
       ]
     }
   ]);
